@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Calenda with Vanilla JS</title>
+    <style></style>
+  </head>
+  <body>
+    <div id="calenda"></div>
+    <script src="text/javascript">
+      const today=new Date()
+      const year = today.getFullYear()
+      function thisMonth(){
+        const month = today.getMonth()
+        return month<9?'0'+month+1:(month+1)+''
+      }
+      const month = thisMonth()
+      const fistDayIndex = new Date(`${year}-${month}-01`).getDay()
+
+      const calDic = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
+      const weekDic = ['일','월','화','수','목','금','토']
+    </script>
+  </body>
+</html>
