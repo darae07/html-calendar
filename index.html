@@ -5,54 +5,319 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Calenda with Vanilla JS</title>
-    <style></style>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        height: 100%;
+        overflow: hidden;
+      }
+      #back {
+        max-height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        max-width: 100%;
+        background-color: black;
+      }
+      #back img {
+        position: absolute;
+        -webkit-transition: opacity 1s ease-in-out;
+        -moz-transition: opacity 1s ease-in-out;
+        -o-transition: opacity 1s ease-in-out;
+        transition: opacity 1s ease-in-out;
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+      }
+      #back img.opaque {
+        opacity: 1;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+        filter: alpha(opacity=1);
+      }
+      /* #bg {
+        background-color: black;
+        width: 100%;
+        height: 100%;
+      } */
+      #container {
+        width: 480px;
+        color: white;
+        font-size: 0.9rem;
+        margin-top: 2rem;
+        margin-left: 3rem;
+        float: left;
+
+        /* background-color: #0093e9;
+        background-image: linear-gradient(160deg, #0093e9 0%, #80d0c7 100%); */
+      }
+      #weekDic {
+        font-size: 0.8rem;
+      }
+      .day {
+        width: 11%;
+        height: 80px;
+        display: inline-block;
+        padding: 5px;
+      }
+      .today {
+        border: 1px solid white;
+      }
+      .dic {
+        display: inline-block;
+        width: 11%;
+        padding: 5px;
+      }
+      #controller {
+        color: white;
+        margin-top: 15rem;
+        float: left;
+      }
+      #controller h3 {
+        margin-bottom: -10px;
+      }
+      #controller img {
+        width: 2rem;
+        height: 2rem;
+        filter: invert(100%);
+        float: left;
+        margin-right: 2rem;
+      }
+      #year {
+        font-size: 1.7rem;
+        display: inline;
+      }
+      #month {
+        font-size: 2rem;
+        display: inline;
+      }
+      #this-day {
+        font-size: 6rem;
+      }
+      #date {
+        font-size: 3rem;
+      }
+    </style>
   </head>
   <body>
-    <div id="calenda"></div>
-    <script src="text/javascript">
-      const today=new Date()
-      const year = today.getFullYear()
-      function thisMonth(){
-        const month = today.getMonth()
-        return month<9?'0'+month+1:(month+1)+''
+    <div id="container">
+      <h2>
+        Winning Photos From 2019 International Photographer of the Year Contest
+      </h2>
+      <div id="year"></div>
+      <div id="month"></div>
+      <div id="weekDic"></div>
+      <div id="calenda"></div>
+    </div>
+    <div id="controller">
+      <h3>Today is ...</h3>
+      <div id="this-day"></div>
+      <div id="date"></div>
+      <div onclick="handleWeek(-1)"><img src="./img/previous.png" /></div>
+      <div onclick="handleWeek(1)"><img src="./img/next.png" /></div>
+    </div>
+    <div id="back">
+      <img
+        id="1"
+        class="opaque img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-9.jpg"
+      />
+      <img
+        id="2"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-14.jpg"
+      />
+      <img
+        id="3"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-3.jpg"
+      />
+      <img
+        id="4"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-4.jpg"
+      />
+      <img
+        id="5"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-5.jpg"
+      />
+      <img
+        id="6"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-6.jpg"
+      />
+      <img
+        id="7"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-7.jpg"
+      />
+      <img
+        id="8"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-8.jpg"
+      />
+      <img
+        id="9"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-10.jpg"
+      />
+      <img
+        id="10"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-12.jpg"
+      />
+      <img
+        id="11"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-13.jpg"
+      />
+      <img
+        id="12"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-14.jpg"
+      />
+      <img
+        id="13"
+        class="img"
+        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-16.jpg"
+      />
+    </div>
+    <div id="bg"></div>
+    <script>
+      let today = new Date();
+      let thisDay = today.getDate();
+      let year = today.getFullYear();
+      let month = today.getMonth() + 1;
+      let date = today.getDay();
+      function getFirstDayIndex() {
+        let fistDayIndex = new Date(`${year}-${month}-01`).getDay();
+        return fistDayIndex;
       }
-      const month = thisMonth()
-      const fistDayIndex = new Date(`${year}-${month}-01`).getDay()
+      let fistDayIndex = getFirstDayIndex();
+      let index = 1;
 
-      const calDic = {1:31, 2:28, 3:31, 4:30, 5:31, 6:30, 7:31, 8:31, 9:30, 10:31, 11:30, 12:31}
-      const weekDic = ['일','월','화','수','목','금','토']
-      var day = 1
-      function makeFirstWeek(){
-          let firstWeek = []
-          i = 0
-          while(i<7){
-            if(i<fistDayIndex){
-              firstWeek.push(calDic[month-1]-i-1)
-            }else{
-              firstWeek.push(day)
-              day+=1
-            }
+      const calDic = {
+        1: 31,
+        2: 28,
+        3: 31,
+        4: 30,
+        5: 31,
+        6: 30,
+        7: 31,
+        8: 31,
+        9: 30,
+        10: 31,
+        11: 30,
+        12: 31,
+      };
+      const weekDic = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+      const weekDic2 = [
+        "SUNDAY",
+        "MONDAY",
+        "TUESDAY",
+        "WEDNESDAY",
+        "THURSDAY",
+        "FRIDAY",
+        "SATDAY",
+      ];
+      weekDic.map((dic) => {
+        let container = document.querySelector("#weekDic");
+        let newElement = document.createElement("div");
+        newElement.id = dic;
+        newElement.className = "dic";
+        newElement.innerHTML = dic;
+        container.appendChild(newElement);
+      });
+      var day = 1;
+      function makeFirstWeek() {
+        day = 1;
+        let firstWeek = [];
+        i = 0;
+        fistDayIndex = getFirstDayIndex();
+        while (i < 7) {
+          if (i < fistDayIndex) {
+            firstWeek.unshift(".");
+          } else {
+            firstWeek.push(day);
+            day += 1;
           }
-          return firstWeek
-      }
-      function makeCalendar(){
-        let calenda = []
-        calenda.push(makeFirstWeek())
-        let m = calDic[month+0]
-        let week = []
-        let nDay = 1
-        while(day <= m){
-          week.push(day)
-          day+=1
-          if(week.length === 7){
-              calenda.push(week)
-              week = []
-          }
-
+          i += 1;
         }
+        return firstWeek;
       }
-      let calenda = makeCalendar()
-      console.log(calenda)
+
+      function makeCalendar() {
+        let calenda = [];
+        let container = document.querySelector("#calenda");
+        container.innerHTML = "";
+        calenda.push(makeFirstWeek());
+        let m = calDic[month * 1];
+        let week = [];
+        let nDay = 1;
+        while (day <= m) {
+          week.push(day);
+          day += 1;
+          if (week.length === 7) {
+            calenda.push(week);
+            week = [];
+          }
+        }
+        calenda.push(week);
+        calenda.map((week) => {
+          week.map((day) => {
+            let newElement = document.createElement("div");
+
+            newElement.className =
+              day === today.getDate() && month === today.getMonth() + 1
+                ? "day today"
+                : "day";
+            newElement.innerHTML = day;
+            container.appendChild(newElement);
+          });
+        });
+        console.log(calenda);
+        return calenda;
+      }
+      let calenda = makeCalendar();
+
+      function handleWeek(opt) {
+        document.getElementById(index).className = "";
+        if (opt > 0) {
+          month += 1;
+          if (month > 12) {
+            month = 1;
+            year += 1;
+          }
+          index += 1;
+          index > 13 ? (index = 1) : index;
+        } else {
+          month -= 1;
+          if (month < 1) {
+            month = 12;
+            year -= 1;
+          }
+          index -= 1;
+          index < 1 ? (index = 13) : index;
+        }
+        console.log(year, month);
+        console.log(index);
+        makeCalendar();
+        document.getElementById("year").innerHTML = "";
+        document.getElementById("month").innerHTML = "";
+        document.getElementById("year").innerHTML = year + " / ";
+        document.getElementById("month").innerHTML = month;
+        document.getElementById(index).className = "opaque";
+      }
+      document.getElementById("year").innerHTML = year + " / ";
+      document.getElementById("month").innerHTML = month;
+      document.getElementById("this-day").innerHTML = thisDay;
+      document.getElementById("date").innerHTML = weekDic2[date];
     </script>
   </body>
 </html>
