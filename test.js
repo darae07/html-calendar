@@ -42,9 +42,10 @@ function makeFirstWeek() {
 function makeCalendar() {
   let calenda = [];
   calenda.push(makeFirstWeek());
-  let m = calDic[month * 1];
+  let m = calDic[month + 0];
   let week = [];
   let nDay = 1;
+  console.log(m);
   while (day <= m) {
     week.push(day);
     day += 1;

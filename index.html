@@ -14,6 +14,8 @@
         overflow: hidden;
       }
       #back {
+        width: 100%;
+        height: 100%;
         max-height: 100%;
         background-position: center;
         background-repeat: no-repeat;
@@ -25,21 +27,89 @@
         max-width: 100%;
         background-color: black;
       }
-      #back img {
+
+      #back .imgwrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      #back .imgview {
         position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         -webkit-transition: opacity 1s ease-in-out;
         -moz-transition: opacity 1s ease-in-out;
         -o-transition: opacity 1s ease-in-out;
         transition: opacity 1s ease-in-out;
-        opacity: 0;
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
         filter: alpha(opacity=0);
+        opacity: 0;
       }
-      #back img.opaque {
+
+      #back .imgview:nth-child(1) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-4.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(2) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-9.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(3) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-13.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(4) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-3.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(5) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-2.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(6) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-5.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(7) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-6.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(8) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-7.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+
+      #back .imgview:nth-child(9) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-8.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(10) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-10.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(11) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-12.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(12) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-14.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+      #back .imgview:nth-child(13) {
+        background:url(./img/international-landscape-photographer-of-the-year-2020-winners-info-16.jpg)0 0 no-repeat;
+        background-size: cover;
+      }
+
+      #back .imgview.opaque {
         opacity: 1;
         -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
         filter: alpha(opacity=1);
+        
       }
+
       /* #bg {
         background-color: black;
         width: 100%;
@@ -76,17 +146,23 @@
       #controller {
         color: white;
         margin-top: 15rem;
-        float: left;
+       
       }
       #controller h3 {
         margin-bottom: -10px;
       }
-      #controller img {
+      #controller .btn div{
+        display: inline;
+      }
+      #controller .btn img {
         width: 2rem;
         height: 2rem;
+        filter: invert(85%);
+        transition: 0.3s;
+      }
+      #controller .btn img:hover{
+        transform:scale(1.1);
         filter: invert(100%);
-        float: left;
-        margin-right: 2rem;
       }
       #year {
         font-size: 1.7rem;
@@ -118,78 +194,32 @@
       <h3>Today is ...</h3>
       <div id="this-day"></div>
       <div id="date"></div>
-      <div onclick="handleWeek(-1)"><img src="./img/previous.png" /></div>
-      <div onclick="handleWeek(1)"><img src="./img/next.png" /></div>
+      <div class="btn">
+        <div onclick="handleWeek(-1)"><img src="./img/previous.png"/></div>
+        <div onclick="handleWeek(1)"><img src="./img/next.png" style='margin-left:2rem'/></div>
+      </div>
+      
     </div>
     <div id="back">
-      <img
-        id="1"
-        class="opaque img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-9.jpg"
-      />
-      <img
-        id="2"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-14.jpg"
-      />
-      <img
-        id="3"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-3.jpg"
-      />
-      <img
-        id="4"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-4.jpg"
-      />
-      <img
-        id="5"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-5.jpg"
-      />
-      <img
-        id="6"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-6.jpg"
-      />
-      <img
-        id="7"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-7.jpg"
-      />
-      <img
-        id="8"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-8.jpg"
-      />
-      <img
-        id="9"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-10.jpg"
-      />
-      <img
-        id="10"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-12.jpg"
-      />
-      <img
-        id="11"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-13.jpg"
-      />
-      <img
-        id="12"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-14.jpg"
-      />
-      <img
-        id="13"
-        class="img"
-        src="./img/international-landscape-photographer-of-the-year-2020-winners-info-16.jpg"
-      />
+      <div class="imgwrap">
+        <div class="imgview opaque" id="1"></div>
+        <div class="imgview" id="2"></div>
+        <div class="imgview" id="3"></div>
+        <div class="imgview" id="4"></div>
+        <div class="imgview" id="5"></div>
+        <div class="imgview" id="6"></div>
+        <div class="imgview" id="7"></div>
+        <div class="imgview" id="8"></div>
+        <div class="imgview" id="9"></div>
+        <div class="imgview" id="10"></div>
+        <div class="imgview" id="11"></div>
+        <div class="imgview" id="12"></div>
+        <div class="imgview" id="13"></div>
+      </div>
     </div>
     <div id="bg"></div>
     <script>
+      
       let today = new Date();
       let thisDay = today.getDate();
       let year = today.getFullYear();
@@ -284,10 +314,11 @@
         console.log(calenda);
         return calenda;
       }
+      
       let calenda = makeCalendar();
 
       function handleWeek(opt) {
-        document.getElementById(index).className = "";
+        document.getElementById(index).className = "imgview";
         if (opt > 0) {
           month += 1;
           if (month > 12) {
@@ -312,8 +343,12 @@
         document.getElementById("month").innerHTML = "";
         document.getElementById("year").innerHTML = year + " / ";
         document.getElementById("month").innerHTML = month;
-        document.getElementById(index).className = "opaque";
+        document.getElementById(index).className = "imgview opaque";
       }
+      function hoverAction(){
+
+      }
+
       document.getElementById("year").innerHTML = year + " / ";
       document.getElementById("month").innerHTML = month;
       document.getElementById("this-day").innerHTML = thisDay;
